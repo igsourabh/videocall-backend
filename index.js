@@ -13,9 +13,7 @@ const server = app.listen(8001, () => {
   console.log(`App listening on http://localhost:8001`);
 });
 const io = new Server(server, {
-  cors: {
-    origin: "*",
-  },
+  cors: true,
 });
 io.on("connection", (socket) => {
   console.log(`Socket Connected`, socket.id);
