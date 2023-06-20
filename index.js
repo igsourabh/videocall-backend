@@ -1,12 +1,20 @@
 const { Server } = require("socket.io");
-
-const io = new Server(8000, {
-  cors: true,
-});
-
+const express = require("express");
+const app = express();
 const emailToSocketIdMap = new Map();
 const socketidToEmailMap = new Map();
-
+app.use(express.json());
+app.get("/", (req, res) => {
+  res.json("working");
+});
+const server = app.listen(8001, () => {
+  console.log(`App listening on http://localhost:8001`);
+});
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
+});
 io.on("connection", (socket) => {
   console.log(`Socket Connected`, socket.id);
   socket.on("room:join", (data) => {
