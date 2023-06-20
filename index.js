@@ -9,11 +9,16 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.json("working");
 });
+
+const corsOptions = {
+  origin: "https://videocall-frontend.vercel.app",
+  methods: ["GET", "POST"],
+};
 const server = app.listen(8001, () => {
   console.log(`App listening on http://localhost:8001`);
 });
 const io = new Server(server, {
-  cors: true,
+  cors: corsOptions,
 });
 io.on("connection", (socket) => {
   console.log(`Socket Connected`, socket.id);
